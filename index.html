@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xaerisoft Device Info | Premium Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="noise-bg"></div>
+    <div class="aurora-bg"></div>
+    <canvas id="universe-canvas"></canvas>
+    
+    <!-- Custom Cursor -->
+    <div id="glow-cursor"></div>
+
+    <!-- Premium Loading Screen -->
+    <div id="loader" class="loader-overlay">
+        <div class="loader-content">
+            <div class="loader-dots">
+                <span></span><span></span><span></span>
+            </div>
+            <p>Initializing Xaerisoft Core...</p>
+            <p class="loader-sub">Scanning Environment & Hardware</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="app-container" style="display: none;" id="main-content">
+        <header>
+            <div class="logo-container">
+                <div class="logo-glow"></div>
+                <h1>Xaerisoft <span>Device Info</span></h1>
+            </div>
+            <p class="subtitle">Know Your Device Instantly</p>
+        </header>
+
+        <!-- Actions -->
+        <section class="actions">
+            <button id="btn-copy" class="btn ripple">📋 Copy All Info</button>
+            <button id="btn-txt" class="btn ripple">📄 Export TXT</button>
+            <button id="btn-json" class="btn ripple">📄 Export JSON</button>
+            <button id="btn-refresh" class="btn ripple">🔄 Refresh</button>
+        </section>
+
+        <!-- Grid Cards -->
+        <section class="grid-container" id="cards-container">
+            <!-- 📱 Device -->
+            <div class="glass-card">
+                <h3>📱 Device</h3>
+                <ul>
+                    <li><span>Type:</span> <span id="dev-type">Scanning...</span></li>
+                    <li><span>Touch Support:</span> <span id="dev-touch">Scanning...</span></li>
+                    <li><span>Orientation:</span> <span id="dev-orient">Scanning...</span></li>
+                </ul>
+            </div>
+
+            <!-- 💻 Browser -->
+            <div class="glass-card">
+                <h3>💻 Browser</h3>
+                <ul>
+                    <li><span>Name:</span> <span id="brw-name">Scanning...</span></li>
+                    <li><span>Version:</span> <span id="brw-version">Scanning...</span></li>
+                    <li class="break-text"><span>User Agent:</span> <span id="brw-ua">Scanning...</span></li>
+                </ul>
+            </div>
+
+            <!-- 🖥 Display -->
+            <div class="glass-card">
+                <h3>🖥 Display</h3>
+                <ul>
+                    <li><span>Resolution:</span> <span id="disp-res">Scanning...</span></li>
+                    <li><span>Viewport:</span> <span id="disp-view">Scanning...</span></li>
+                    <li><span>Pixel Ratio:</span> <span id="disp-ratio">Scanning...</span></li>
+                    <li><span>Color Depth:</span> <span id="disp-color">Scanning...</span></li>
+                    <li><span>Theme Mode:</span> <span id="disp-theme">Scanning...</span></li>
+                </ul>
+            </div>
+
+            <!-- 🌐 Network -->
+            <div class="glass-card">
+                <h3>🌐 Network</h3>
+                <ul>
+                    <li><span>Status:</span> <span id="net-status">Scanning...</span></li>
+                    <li><span>Connection Type:</span> <span id="net-type">Scanning...</span></li>
+                    <li><span>Downlink:</span> <span id="net-downlink">Scanning...</span></li>
+                    <li><span>RTT:</span> <span id="net-rtt">Scanning...</span></li>
+                    <li><span>Save Data Mode:</span> <span id="net-save">Scanning...</span></li>
+                </ul>
+            </div>
+
+            <!-- ⚙ Hardware -->
+            <div class="glass-card">
+                <h3>⚙ Hardware</h3>
+                <ul>
+                    <li><span>CPU Threads:</span> <span id="hw-cpu">Scanning...</span></li>
+                    <li><span>Device Memory:</span> <span id="hw-mem">Scanning...</span></li>
+                    <li class="break-text"><span>GPU Vendor:</span> <span id="hw-gpu-v">Scanning...</span></li>
+                    <li class="break-text"><span>GPU Renderer:</span> <span id="hw-gpu-r">Scanning...</span></li>
+                    <li><span>WebGL Version:</span> <span id="hw-webgl">Scanning...</span></li>
+                </ul>
+            </div>
+
+            <!-- 🌍 Time & Location -->
+            <div class="glass-card">
+                <h3>🌍 Time & Location</h3>
+                <ul>
+                    <li><span>Local Time:</span> <span id="time-local">Scanning...</span></li>
+                    <li><span>Timezone:</span> <span id="time-zone">Scanning...</span></li>
+                    <li><span>UTC Offset:</span> <span id="time-utc">Scanning...</span></li>
+                    <li class="break-text"><span>Location:</span> <span id="loc-data">Scanning...</span></li>
+                </ul>
+            </div>
+
+            <!-- 🌎 Language & Features -->
+            <div class="glass-card">
+                <h3>🌎 Lang & API Features</h3>
+                <ul>
+                    <li><span>Browser Lang:</span> <span id="lang-brw">Scanning...</span></li>
+                    <li><span>Preferred Lang:</span> <span id="lang-pref">Scanning...</span></li>
+                    <li><span>Cookies:</span> <span id="feat-cookies">Scanning...</span></li>
+                    <li><span>Storage (Local/Session):</span> <span id="feat-storage">Scanning...</span></li>
+                    <li><span>Clipboard API:</span> <span id="feat-clip">Scanning...</span></li>
+                    <li><span>Web Share API:</span> <span id="feat-share">Scanning...</span></li>
+                </ul>
+            </div>
+
+            <!-- 📷 Media & Sensors -->
+            <div class="glass-card">
+                <h3>📷 Media & Sensors</h3>
+                <ul>
+                    <li><span>Camera:</span> <span id="media-cam">Scanning...</span></li>
+                    <li><span>Microphone:</span> <span id="media-mic">Scanning...</span></li>
+                    <li><span>Gyroscope:</span> <span id="sens-gyro">Scanning...</span></li>
+                    <li><span>Accelerometer:</span> <span id="sens-accel">Scanning...</span></li>
+                    <li><span>Touch Sensor:</span> <span id="sens-touch">Scanning...</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>Xaerisoft Device Info</p>
+            <p>Created by <span>WillXD</span></p>
+            <p>Copyright &copy; 2026 WillXD. All Rights Reserved.</p>
+        </footer>
+    </main>
+
+    <!-- Hidden Canvas for GPU Detection -->
+    <canvas id="gpu-canvas" style="display: none;"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
